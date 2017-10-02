@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="273dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout3">
+
+        <ImageView
+            android:id="@+id/imageView_custompicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/splash_img" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editText_custompicture_coordinate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView4"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Angle(45-135)"/>
+
+    <Button
+        android:id="@+id/button_custompicture_takepicture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_custompicture_coordinate"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:text="Take picture" />
+
+</RelativeLayout>
