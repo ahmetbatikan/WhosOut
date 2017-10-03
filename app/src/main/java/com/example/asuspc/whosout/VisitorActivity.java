@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +27,9 @@ public class VisitorActivity extends AppCompatActivity {
     private Button but_custom_picture;
     private Button but_visitor_send_message;
     private ImageView img_visitor;
+    boolean fileAvaiable=false;
+    int index=1;
+    private float x1,x2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,55 @@ public class VisitorActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = x2 - x1;
+                if(fileAvaiable) {
+                    if (Math.abs(deltaX) > 150) {
+                        if(x1>x2){
+                            // Toast.makeText(this, "left2right swipe", Toast.LENGTH_SHORT).show ();
+                            index++;
+                        } else {
+                            // consider as something else - a screen tap for example
+                            index--;
+                        }
+                    }
+                    try {
+                        File root = new File("/sdcard/Images_Whosout/image_test"+index+".jpg");
+                        if(root.exists()){
+
+                            Bitmap myBitmap = BitmapFactory.decodeFile(root.getAbsolutePath());
+
+                            img_visitor = (ImageView)findViewById(R.id.imageView_visitor);
+                            img_visitor.setImageBitmap(myBitmap);
+                            fileAvaiable=true;
+                        }
+                    } catch (Exception e) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(VisitorActivity.this).create();
+                        alertDialog.setTitle("Alert");
+                        alertDialog.setMessage(e.getMessage());
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
 
@@ -96,6 +149,8 @@ public class VisitorActivity extends AppCompatActivity {
 
                     img_visitor = (ImageView)findViewById(R.id.imageView_visitor);
                     img_visitor.setImageBitmap(myBitmap);
+                    fileAvaiable=true;
+                    index=1;
                 }
             } catch (Exception e) {
                 AlertDialog alertDialog = new AlertDialog.Builder(VisitorActivity.this).create();
