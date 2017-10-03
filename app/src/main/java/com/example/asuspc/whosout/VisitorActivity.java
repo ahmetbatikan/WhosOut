@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -27,8 +28,10 @@ public class VisitorActivity extends AppCompatActivity {
     private Button but_custom_picture;
     private Button but_visitor_send_message;
     private ImageView img_visitor;
+    private TextView visitor_num;
     boolean fileAvaiable=false;
     int index=1;
+    int totalVisitor=0;
     private float x1,x2;
 
     @Override
@@ -40,17 +43,18 @@ public class VisitorActivity extends AppCompatActivity {
         but_refresh_image = (Button)findViewById(R.id.button_refresh_image);
         but_custom_picture = (Button)findViewById(R.id.button_custom_picture);
         but_visitor_send_message = (Button)findViewById(R.id.button_send_message);
-
+        visitor_num = (TextView)findViewById(R.id.textView_visitorNum);
 
         but_refresh_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new DatabaseTask().execute();
+                //visitor_num.text
             }
         });
 
         but_custom_picture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(VisitorActivity.this, CustomImageActivity.class);
+;               Intent i = new Intent(VisitorActivity.this, CustomImageActivity.class);
                 startActivity(i);
             }
         });
@@ -87,7 +91,7 @@ public class VisitorActivity extends AppCompatActivity {
                     try {
                         File root = new File("/sdcard/Images_Whosout/image_test"+index+".jpg");
                         if(root.exists()){
-
+                            visitor_num.setText("Total detection: "+totalVisitor+"     Current image: " +index);
                             Bitmap myBitmap = BitmapFactory.decodeFile(root.getAbsolutePath());
 
                             img_visitor = (ImageView)findViewById(R.id.imageView_visitor);
@@ -144,7 +148,10 @@ public class VisitorActivity extends AppCompatActivity {
             try {
                 File root = new File("/sdcard/Images_Whosout/image_test1.jpg");
                 if(root.exists()){
-
+                    File temp=new File("/sdcard/Images_Whosout");
+                    File[] temp_files = temp.listFiles();
+                    totalVisitor=temp_files.length;
+                    visitor_num.setText("Total detection: "+totalVisitor+"     Current image: " +1);
                     Bitmap myBitmap = BitmapFactory.decodeFile(root.getAbsolutePath());
 
                     img_visitor = (ImageView)findViewById(R.id.imageView_visitor);

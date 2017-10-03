@@ -56,9 +56,10 @@ public class DatabaseHelper {
                 String name = resultSet.getString(1);
                 String description = resultSet.getString(2);
                 File root = new File(Environment.getExternalStorageDirectory(), "Images_Whosout");
-                if (!root.exists()) {
-                    root.mkdirs(); // this will create folder.
+                if (root.exists()) {
+                    deleteDirectory(root);//root.mkdirs(); // this will create folder.
                 }
+                root.mkdirs();
                 File image = new File(root,"image_test"+(++index)+".jpg");
                 FileOutputStream fos = new FileOutputStream(image);
 
@@ -75,5 +76,23 @@ public class DatabaseHelper {
 
     public void getImageDay(){
 
+    }
+
+    public static boolean deleteDirectory(File path) {
+        if( path.exists() ) {
+            File[] files = path.listFiles();
+            if (files == null) {
+                return true;
+            }
+            for(int i=0; i<files.length; i++) {
+                if(files[i].isDirectory()) {
+                    deleteDirectory(files[i]);
+                }
+                else {
+                //    files[i].delete();
+                }
+            }
+        }
+        return( path.delete() );
     }
 }
