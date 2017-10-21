@@ -73,21 +73,21 @@ public class DatabaseHelper {
             }
         }
         catch (Exception e){}
-        /*set the flag zero nd the next message old images not shown
+        //set the flag zero nd the next message old images not shown
         try{
             String sql = "UPDATE Photo SET flag='0' WHERE flag='1';";
             PreparedStatement stmt = connect.prepareStatement(sql);
             stmt.executeUpdate(sql);
         }
         catch (Exception e){}
-        */
+
     }
 
     public void getImageAll(){
         File root = new File(Environment.getExternalStorageDirectory(), "Images_Whosout");
 
         try {
-            String sql = "SELECT * FROM Photo WHERE flag='1';";
+            String sql = "SELECT * FROM Photo";
             PreparedStatement stmt = connect.prepareStatement(sql);
             ResultSet resultSet = stmt.executeQuery();
             int index=0;
