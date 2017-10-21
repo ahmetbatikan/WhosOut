@@ -47,6 +47,8 @@ public class DatabaseHelper {
     }
 
     public void getImageNotSeen(){
+        File root = new File(Environment.getExternalStorageDirectory(), "Images_Whosout");
+
         try {
             String sql = "SELECT * FROM Photo WHERE flag='1';";
             PreparedStatement stmt = connect.prepareStatement(sql);
@@ -55,9 +57,8 @@ public class DatabaseHelper {
             while (resultSet.next()) {
                 String name = resultSet.getString(1);
                 String description = resultSet.getString(2);
-                File root = new File(Environment.getExternalStorageDirectory(), "Images_Whosout");
-                if (root.exists()) {
-                    deleteDirectory(root);//root.mkdirs(); // this will create folder.
+                if (!root.exists()) {
+                    root.mkdirs(); // this will create folder.
                 }
                 root.mkdirs();
                 File image = new File(root,"image_test"+(++index)+".jpg");
@@ -72,6 +73,14 @@ public class DatabaseHelper {
             }
         }
         catch (Exception e){}
+        /*set the flag zero nd the next message old images not shown
+        try{
+            String sql = "UPDATE Photo SET flag='0' WHERE flag='1';";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            stmt.executeUpdate(sql);
+        }
+        catch (Exception e){}
+        */
     }
 
     public void getImageDay(){

@@ -45,10 +45,10 @@ public class VisitorActivity extends AppCompatActivity {
         but_visitor_send_message = (Button)findViewById(R.id.button_send_message);
         visitor_num = (TextView)findViewById(R.id.textView_visitorNum);
 
+        new DatabaseTask().execute();
         but_refresh_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new DatabaseTask().execute();
-                //visitor_num.text
             }
         });
 
