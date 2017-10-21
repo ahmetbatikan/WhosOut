@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button_sec.setOnClickListener(new View.OnClickListener() {
+        Button_his.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, HistoryActivity.class);
                 startActivity(i);

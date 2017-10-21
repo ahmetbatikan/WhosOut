@@ -21,6 +21,7 @@
         <activity android:name=".VisitorActivity" />
         <activity android:name=".CustomImageActivity" />
         <activity android:name=".MessageActivity" />
+        <activity android:name=".HistoryActivity" />
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
