@@ -83,8 +83,33 @@ public class DatabaseHelper {
         */
     }
 
-    public void getImageDay(){
+    public void getImageAll(){
+        File root = new File(Environment.getExternalStorageDirectory(), "Images_Whosout");
 
+        try {
+            String sql = "SELECT * FROM Photo WHERE flag='1';";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            int index=0;
+            while (resultSet.next()) {
+                String name = resultSet.getString(1);
+                String description = resultSet.getString(2);
+                if (!root.exists()) {
+                    root.mkdirs(); // this will create folder.
+                }
+                root.mkdirs();
+                File image = new File(root,"image_test"+(++index)+".jpg");
+                FileOutputStream fos = new FileOutputStream(image);
+
+                byte[] buffer = new byte[1];
+                InputStream is = resultSet.getBinaryStream(3);
+                while (is.read(buffer) > 0) {
+                    fos.write(buffer);
+                }
+                fos.close();
+            }
+        }
+        catch (Exception e){}
     }
 
     public static boolean deleteDirectory(File path) {

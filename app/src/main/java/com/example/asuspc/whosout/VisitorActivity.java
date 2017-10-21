@@ -45,7 +45,13 @@ public class VisitorActivity extends AppCompatActivity {
         but_visitor_send_message = (Button)findViewById(R.id.button_send_message);
         visitor_num = (TextView)findViewById(R.id.textView_visitorNum);
 
+        File root = new File("/sdcard/Images_Whosout");
+        if (root.exists()) {
+            deleteDirectory(root);//root.mkdirs(); // this will create folder.
+        }
+
         new DatabaseTask().execute();
+
         but_refresh_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new DatabaseTask().execute();
@@ -116,6 +122,23 @@ public class VisitorActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    public static boolean deleteDirectory(File path) {
+        if( path.exists() ) {
+            File[] files = path.listFiles();
+            if (files == null) {
+                return true;
+            }
+            for(int i=0; i<files.length; i++) {
+                if(files[i].isDirectory()) {
+                    deleteDirectory(files[i]);
+                }
+                else {
+                    //    files[i].delete();
+                }
+            }
+        }
+        return( path.delete() );
+    }
 
     private class DatabaseTask extends AsyncTask<Void, Void, Void> {
         DatabaseHelper helper;
