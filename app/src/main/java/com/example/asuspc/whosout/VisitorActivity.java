@@ -50,7 +50,7 @@ public class VisitorActivity extends AppCompatActivity {
             deleteDirectory(root);//root.mkdirs(); // this will create folder.
         }
 
-        new DatabaseTask().execute();
+      //  new DatabaseTask().execute();
 
         but_refresh_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -133,7 +133,7 @@ public class VisitorActivity extends AppCompatActivity {
                     deleteDirectory(files[i]);
                 }
                 else {
-                    //    files[i].delete();
+                        files[i].delete();
                 }
             }
         }

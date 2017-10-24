@@ -35,7 +35,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_history);
 
-        but_refresh_image_history = (Button)findViewById(R.id.button_refresh_image);
+        but_refresh_image_history = (Button)findViewById(R.id.button_refresh_history);
 
         File root = new File("/sdcard/Images_Whosout");
         if (root.exists()) {
@@ -79,7 +79,7 @@ public class HistoryActivity extends AppCompatActivity {
                          //   visitor_num.setText("Total detection: "+totalVisitor+"     Current image: " +index);
                             Bitmap myBitmap = BitmapFactory.decodeFile(root.getAbsolutePath());
 
-                            img_visitor = (ImageView)findViewById(R.id.imageView_visitor);
+                            img_visitor = (ImageView)findViewById(R.id.imageView_history);
                             img_visitor.setImageBitmap(myBitmap);
                             fileAvaiable=true;
                         }
@@ -112,7 +112,7 @@ public class HistoryActivity extends AppCompatActivity {
                     deleteDirectory(files[i]);
                 }
                 else {
-                    //    files[i].delete();
+                    files[i].delete();
                 }
             }
         }
@@ -131,7 +131,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
             catch (Exception e){
                 AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivity.this).create();
-                alertDialog.setTitle("Alert");
+                alertDialog.setTitle("Alert1");
                 alertDialog.setMessage(e.getMessage());
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
@@ -156,14 +156,14 @@ public class HistoryActivity extends AppCompatActivity {
                   //  visitor_num.setText("Total detection: "+totalVisitor+"     Current image: " +1);
                     Bitmap myBitmap = BitmapFactory.decodeFile(root.getAbsolutePath());
 
-                    img_visitor = (ImageView)findViewById(R.id.imageView_visitor);
+                    img_visitor = (ImageView)findViewById(R.id.imageView_history);
                     img_visitor.setImageBitmap(myBitmap);
                     fileAvaiable=true;
                     index=1;
                 }
             } catch (Exception e) {
                 AlertDialog alertDialog = new AlertDialog.Builder(HistoryActivity.this).create();
-                alertDialog.setTitle("Alert");
+                alertDialog.setTitle("Alert2");
                 alertDialog.setMessage(e.getMessage());
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {

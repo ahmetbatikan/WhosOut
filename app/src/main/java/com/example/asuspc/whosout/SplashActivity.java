@@ -54,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
                     deleteDirectory(files[i]);
                 }
                 else {
-                    //    files[i].delete();
+                    files[i].delete();
                 }
             }
         }
