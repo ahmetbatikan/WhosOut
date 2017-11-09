@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.File;
@@ -24,28 +25,32 @@ public class HistoryActivity extends AppCompatActivity {
 
     private Button but_refresh_image_history;
     private ImageView img_visitor;
+    private TextView history_num;
     boolean fileAvaiable=false;
     int index=1;
     int totalVisitor=0;
     private float x1,x2;
+    private ProgressBar spinner;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_history);
-
+        history_num =(TextView)findViewById(R.id.textView_visitorNum_hist);
         but_refresh_image_history = (Button)findViewById(R.id.button_refresh_history);
+        spinner = (ProgressBar)findViewById(R.id.progressBar2);
 
         File root = new File("/sdcard/Images_Whosout");
         if (root.exists()) {
             deleteDirectory(root);//root.mkdirs(); // this will create folder.
         }
-
+        spinner.setVisibility(View.VISIBLE);
         new DatabaseTask().execute();
 
         but_refresh_image_history.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
                 new DatabaseTask().execute();
             }
         });
@@ -76,7 +81,7 @@ public class HistoryActivity extends AppCompatActivity {
                     try {
                         File root = new File("/sdcard/Images_Whosout/image_test"+index+".jpg");
                         if(root.exists()){
-                         //   visitor_num.setText("Total detection: "+totalVisitor+"     Current image: " +index);
+                            history_num.setText("Total detection: "+totalVisitor+"     Current image: " +index);
                             Bitmap myBitmap = BitmapFactory.decodeFile(root.getAbsolutePath());
 
                             img_visitor = (ImageView)findViewById(R.id.imageView_history);
@@ -147,13 +152,14 @@ public class HistoryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+            spinner.setVisibility(View.INVISIBLE);
             try {
                 File root = new File("/sdcard/Images_Whosout/image_test1.jpg");
                 if(root.exists()){
                     File temp=new File("/sdcard/Images_Whosout");
                     File[] temp_files = temp.listFiles();
                     totalVisitor=temp_files.length;
-                  //  visitor_num.setText("Total detection: "+totalVisitor+"     Current image: " +1);
+                    history_num.setText("Total detection: "+totalVisitor+"     Current image: " +1);
                     Bitmap myBitmap = BitmapFactory.decodeFile(root.getAbsolutePath());
 
                     img_visitor = (ImageView)findViewById(R.id.imageView_history);

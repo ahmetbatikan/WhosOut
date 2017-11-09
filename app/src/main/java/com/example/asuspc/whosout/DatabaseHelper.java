@@ -50,7 +50,7 @@ public class DatabaseHelper {
         File root = new File(Environment.getExternalStorageDirectory(), "Images_Whosout");
 
         try {
-            String sql = "SELECT * FROM Photo WHERE flag='1';";
+            String sql = "SELECT * FROM Photo WHERE flag='1' AND name='Visitor';";
             PreparedStatement stmt = connect.prepareStatement(sql);
             ResultSet resultSet = stmt.executeQuery();
             int index=0;
@@ -75,7 +75,7 @@ public class DatabaseHelper {
         catch (Exception e){}
         //set the flag zero nd the next message old images not shown
         try{
-            String sql = "UPDATE Photo SET flag='0' WHERE flag='1';";
+            String sql = "UPDATE Photo SET flag='0' WHERE flag='1' AND name='Visitor';";
             PreparedStatement stmt = connect.prepareStatement(sql);
             stmt.executeUpdate(sql);
         }
@@ -93,7 +93,7 @@ public class DatabaseHelper {
             int index=0;
             while (resultSet.next()) {
                 String name = resultSet.getString(1);
-                String description = resultSet.getString(2);
+                String description = resultSet.getString(5);
                 if (!root.exists()) {
                     root.mkdirs(); // this will create folder.
                 }
@@ -111,6 +111,97 @@ public class DatabaseHelper {
         }
         catch (Exception e){}
     }
+
+    public void getImageSecurity(){
+        try {
+            String sql = "SELECT * FROM Photo WHERE flag='1' AND name='Security';";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            int index=0;
+            while (resultSet.next()) {
+                String name = resultSet.getString(1);
+                String description = resultSet.getString(5);
+                File root = new File(Environment.getExternalStorageDirectory(), "Images_Whosout");
+                if (root.exists()) {
+                    deleteDirectory(root);//root.mkdirs(); // this will create folder.
+                }
+                root.mkdirs();
+                File image = new File(root,"image_test"+(++index)+".jpg");
+                FileOutputStream fos = new FileOutputStream(image);
+
+                byte[] buffer = new byte[1];
+                InputStream is = resultSet.getBinaryStream(3);
+                while (is.read(buffer) > 0) {
+                    fos.write(buffer);
+                }
+                fos.close();
+            }
+        }
+        catch (Exception e){}
+        //set the flag zero nd the next message old images not shown
+        try{
+            String sql = "UPDATE Photo SET flag='0' WHERE flag='1' AND name='Security';";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            stmt.executeUpdate(sql);
+        }
+        catch (Exception e){}
+    }
+
+
+
+    public int checkButton()
+    {
+        try {
+            int lock=0;
+            int light=0;
+            int check=0;
+            String query = "SELECT * FROM Security";
+            PreparedStatement stmt = connect.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next())
+            {
+                lock = resultSet.getInt(2);
+                light = resultSet.getInt(3);
+                if (lock ==1)
+                {
+                    check += 1;
+                }
+                if (light ==1)
+                {
+                    check += 10;
+                }
+            }
+            return check;
+        }
+        catch (Exception e){return -10;}
+    }
+
+    public boolean updateDoorLock(int lock)
+    {
+        try {
+            String query = "update Security set doorlock='"+lock+"'";
+            state = connect.prepareStatement(query);
+            state.executeUpdate(query);
+        }
+        catch (Exception e){return false;}
+        return true;
+    }
+    public boolean updateLamp(int lamp)
+    {
+        try {
+
+            String query = "update Security set light='"+lamp+"'";
+            state = connect.prepareStatement(query);
+            state.executeUpdate(query);
+            String query2 = "update Security set flag='1'";
+            state = connect.prepareStatement(query2);
+            state.executeUpdate(query2);
+
+        }
+        catch (Exception e){return false;}
+        return true;
+    }
+
 
     public static boolean deleteDirectory(File path) {
         if( path.exists() ) {

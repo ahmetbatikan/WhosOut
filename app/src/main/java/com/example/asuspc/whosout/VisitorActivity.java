@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class VisitorActivity extends AppCompatActivity {
     int index=1;
     int totalVisitor=0;
     private float x1,x2;
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +46,19 @@ public class VisitorActivity extends AppCompatActivity {
         but_custom_picture = (Button)findViewById(R.id.button_custom_picture);
         but_visitor_send_message = (Button)findViewById(R.id.button_send_message);
         visitor_num = (TextView)findViewById(R.id.textView_visitorNum);
+        spinner = (ProgressBar)findViewById(R.id.progressBar3);
+
 
         File root = new File("/sdcard/Images_Whosout");
         if (root.exists()) {
             deleteDirectory(root);//root.mkdirs(); // this will create folder.
         }
-
-      //  new DatabaseTask().execute();
+        spinner.setVisibility(View.VISIBLE);
+        new DatabaseTask().execute();
 
         but_refresh_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
                 new DatabaseTask().execute();
             }
         });
@@ -168,6 +173,7 @@ public class VisitorActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+            spinner.setVisibility(View.INVISIBLE);
             try {
                 File root = new File("/sdcard/Images_Whosout/image_test1.jpg");
                 if(root.exists()){
@@ -181,6 +187,18 @@ public class VisitorActivity extends AppCompatActivity {
                     img_visitor.setImageBitmap(myBitmap);
                     fileAvaiable=true;
                     index=1;
+                }
+                if(totalVisitor==0){
+                    AlertDialog alertDialog = new AlertDialog.Builder(VisitorActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("There is no visitor");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                 }
             } catch (Exception e) {
                 AlertDialog alertDialog = new AlertDialog.Builder(VisitorActivity.this).create();
