@@ -239,10 +239,10 @@ public class SecurityActivity extends AppCompatActivity {
 
             spinner.setVisibility(View.INVISIBLE);
             if(firstTime){
-                if(carrier/10==1){
+                if(carrier%10==1){
                     lock_switch.setChecked(true);
                 }
-                if(carrier%10==1){
+                if(carrier/10==1){
                     lamp_switch.setChecked(true);
                 }
                 firstTime=false;
