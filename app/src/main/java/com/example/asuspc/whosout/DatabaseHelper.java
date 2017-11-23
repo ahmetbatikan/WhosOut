@@ -147,7 +147,39 @@ public class DatabaseHelper {
         catch (Exception e){}
     }
 
+    public void sendMessages(String msg){
+        try {
+            String sql = " INSERT INTO Message(source, flag, mesaj)" + " VALUE (?, ?, ?)";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            stmt.setString (1, "User");
+            stmt.setInt (2, 1);
+            stmt.setString   (3, msg);
+            stmt.execute();
+            connect.close();
+        }
+        catch (Exception e){}
+    }
 
+    public String receiveMessages(){
+        String temp_txt="";
+        try {
+            String sql = "SELECT * FROM Message WHERE flag='1' AND source='Door';";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                temp_txt +="\n* " + resultSet.getString(4);
+            }
+        }
+        catch (Exception e){}
+        //set the flag zero nd the next message old images not shown
+        try{
+            String sql = "UPDATE Message SET flag='0' WHERE flag='1' AND source='Door';";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            stmt.executeUpdate(sql);
+        }
+        catch (Exception e){}
+        return temp_txt;
+    }
 
     public int checkButton()
     {

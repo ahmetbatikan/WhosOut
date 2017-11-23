@@ -4,17 +4,38 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout4">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="304dp"
+            android:layout_weight="0.76"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/input_msg"
+                android:layout_width="117dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Receiveing messages:" />
+
+            <TextView
+                android:id="@+id/output_msg"
+                android:layout_width="119dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:text="Sending messagges:" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/editText_message"
-            android:layout_width="wrap_content"
-            android:layout_height="314dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
@@ -27,15 +48,23 @@
             android:ems="10"
             android:hint="Message send to visitor"
             android:inputType="textPersonName" />
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/button_message_sendmessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout4"
-        android:text="SEND" />
+        <Button
+            android:id="@+id/button_message_sendmessage"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_weight="0.76"
+            android:text="SEND" />
+
+        <Button
+            android:id="@+id/temp_check_msg"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_weight="0.76"
+            android:text="Check receive" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -35,7 +35,7 @@ public class CustomImageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 WebSettings webSettings = web_video.getSettings();
                 webSettings.setJavaScriptEnabled(true);
-                web_video.loadUrl("https://www.mgm.gov.tr/tahmin/turkiye.aspx/");
+                web_video.loadUrl("www.gazeteler.com/");
             }
         });
 
