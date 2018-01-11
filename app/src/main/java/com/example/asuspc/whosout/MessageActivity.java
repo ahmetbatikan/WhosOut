@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by AsusPc on 1.10.2017.
@@ -55,6 +57,14 @@ public class MessageActivity extends AppCompatActivity {
                 new DatabaseTask().execute();
             }
         });
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {  //her 60 sn de bir bildirimGonder(); metodu çağırılır.
+            @Override
+            public void run() {
+                process_type=false;
+                new DatabaseTask().execute();
+            }
+        }, 0, 3000);
     }
 
     private class DatabaseTask extends AsyncTask<Void, Void, Void> {
@@ -66,7 +76,9 @@ public class MessageActivity extends AppCompatActivity {
                 helper=new DatabaseHelper();
                 helper.connectDatabase();
                 if(process_type){
-                    helper.sendMessages(""+editText_mes.getText());
+                    if(("" +editText_mes.getText())!="") {
+                        helper.sendMessages("" + editText_mes.getText());
+                    }
                 }
                 else{
                     temp_txt=helper.receiveMessages();

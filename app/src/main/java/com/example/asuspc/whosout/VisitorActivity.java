@@ -43,7 +43,7 @@ public class VisitorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visitor);
 
         but_refresh_image = (Button)findViewById(R.id.button_refresh_image);
-        but_custom_picture = (Button)findViewById(R.id.button_custom_picture);
+        //but_custom_picture = (Button)findViewById(R.id.button_custom_picture);
         but_visitor_send_message = (Button)findViewById(R.id.button_send_message);
         visitor_num = (TextView)findViewById(R.id.textView_visitorNum);
         spinner = (ProgressBar)findViewById(R.id.progressBar3);
@@ -63,12 +63,12 @@ public class VisitorActivity extends AppCompatActivity {
             }
         });
 
-        but_custom_picture.setOnClickListener(new View.OnClickListener() {
+        /*but_custom_picture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 ;               Intent i = new Intent(VisitorActivity.this, CustomImageActivity.class);
                 startActivity(i);
             }
-        });
+        });*/
 
         but_visitor_send_message.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

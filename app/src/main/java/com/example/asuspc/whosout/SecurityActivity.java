@@ -1,6 +1,7 @@
 package com.example.asuspc.whosout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -27,12 +28,10 @@ public class SecurityActivity extends AppCompatActivity {
     Switch lock_switch;
     Switch lamp_switch;
     Button refreshButton;
+    Button messageButton;
 
 
     private float x1,x2;
-    private static final String DB_URL = "jdbc:mysql://35.195.221.163/whosoutdb";
-    private static final String username = "root";
-    private static final String password = "123456";
     private int lockValue;
     private int lampValue;
     private int alarmValue;
@@ -55,6 +54,7 @@ public class SecurityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
         refreshButton= (Button) findViewById(R.id.button);
+        messageButton= (Button) findViewById(R.id.security_message);
         lock_switch = (Switch) findViewById(R.id.lock_switch);
         lamp_switch = (Switch) findViewById(R.id.lamp_switch);
         textView_securityNum = (TextView)findViewById(R.id.textView_securityNum);
@@ -79,7 +79,12 @@ public class SecurityActivity extends AppCompatActivity {
 
             }
         });
-
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(SecurityActivity.this, MessageActivity.class);
+                startActivity(i);
+            }
+        });
 
         lock_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -238,27 +243,7 @@ public class SecurityActivity extends AppCompatActivity {
         {
 
             spinner.setVisibility(View.INVISIBLE);
-            if(firstTime){
-                if(carrier%10==1){
-                    lock_switch.setChecked(true);
-                }
-                if(carrier/10==1){
-                    lamp_switch.setChecked(true);
-                }
-                firstTime=false;
-                if(totalPeople==0){
-                    AlertDialog alertDialog = new AlertDialog.Builder(SecurityActivity.this).create();
-                    alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("There is no Security VIOLATION");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                }
-            }
+
             try {
                 File root = new File("/sdcard/Images_Whosout/image_test1.jpg");
                 if(root.exists()){
@@ -285,6 +270,27 @@ public class SecurityActivity extends AppCompatActivity {
                             }
                         });
                 alertDialog.show();
+            }
+            if(firstTime){
+                if(carrier%10==1){
+                    lock_switch.setChecked(true);
+                }
+                if(carrier/10==1){
+                    lamp_switch.setChecked(true);
+                }
+                firstTime=false;
+                if(totalPeople==0){
+                    AlertDialog alertDialog = new AlertDialog.Builder(SecurityActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("There is no Security VIOLATION");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
             }
         }
 

@@ -44,10 +44,10 @@ public class CustomImageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Uri uriUrl;
                 if(url_data.getText().toString().equals("")){
-                    uriUrl = Uri.parse("http://139.179.55.28:5000/");
+                    uriUrl = Uri.parse("http://139.179.55.116:5000/");
                 }
                 else{
-                    uriUrl = Uri.parse("http://"+url_data.getText().toString());
+                    uriUrl = Uri.parse("http://"+url_data.getText().toString()+"/");
                 }
                 //139.179.55.28:5000
                 Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);

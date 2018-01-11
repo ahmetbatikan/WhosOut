@@ -19,7 +19,7 @@ public class DatabaseHelper {
     private final String DB_URL = "jdbc:mysql://35.195.221.163/whosoutdb";
 
     private final String username = "root";
-    private final String password = "123456";
+    private final String password = "199495";
 
     private Connection connect;
     private Statement state;
@@ -145,6 +145,28 @@ public class DatabaseHelper {
             stmt.executeUpdate(sql);
         }
         catch (Exception e){}
+    }
+    public int[] checkNewSecurity(){
+        int[] arr= new int[3];
+        int check=0;
+        int visitor=0;
+        int security=0;
+
+        try {
+            String sql = "SELECT * FROM Photo WHERE flag='1';";
+            PreparedStatement stmt = connect.prepareStatement(sql);
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                check++;
+                if(resultSet.getString(2).equals("Visitor")){visitor++;}
+                if(resultSet.getString(2).equals("Security")){security++;}
+            }
+        }
+        catch (Exception e){}
+        arr[0]=check;
+        arr[1]=visitor;
+        arr[2]=security;
+        return arr;
     }
 
     public void sendMessages(String msg){
